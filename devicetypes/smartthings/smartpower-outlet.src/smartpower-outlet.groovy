@@ -132,6 +132,8 @@ def configure() {
 	// enrolls with default periodic reporting until newer 5 min interval is confirmed
 	sendEvent(name: "checkInterval", value: 2 * 10 * 60 + 1 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
 
+	// https://community.smartthings.com/t/turn-off-power-notifications-on-smartthings-power-outlet/81629/4
+	
 	// OnOff minReportTime 0 seconds, maxReportTime 5 min. Reporting interval if no activity
-	refresh() + zigbee.onOffConfig(0, 300) + zigbee.electricMeasurementPowerConfig()
+	refresh() + zigbee.onOffConfig(0, 300) + zigbee.electricMeasurementPowerConfig(minReportTime=10, maxReportTime=600, reportableChange=0x0014)
 }
